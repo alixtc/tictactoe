@@ -22,3 +22,37 @@ def test_cpu_pick_valid_position():
 
     move = cpu.pick_valid_position(board)
     assert move in cpu.get_list_of_valid_positions(board)
+
+
+def test_cpu_find_sure_win_positions():
+    board = Board()
+    board.board = np.array(
+        [["X", "2", "X"], ["4", "O", "6"], ["7", "O", "9"]], dtype=str
+    )
+    cpu = CpuAI()
+    move = cpu.find_sure_win_position(board)
+    assert move == ["2"]
+
+
+def test_cpu_find_sure_win_positions_with_2_positions():
+    board = Board()
+    board.board = np.array(
+        [["X", "O", "X"], ["O", "O", "6"], ["X", "8", "9"]], dtype=str
+    )
+    cpu = CpuAI()
+    assert cpu.find_sure_win_position(board) == ["6", "8"]
+
+
+def test_get_immediate_winning_position_has_no_win_position():
+    cpu = CpuAI()
+    sequence = ["O", "4", "X"]
+    assert cpu.get_immediate_winning_position(sequence) == ""
+
+    sequence = ["O", "4", "7"]
+    assert cpu.get_immediate_winning_position(sequence) == ""
+
+
+def test_get_immediate_winning_position_has_no_win_position():
+    cpu = CpuAI()
+    sequence = ["O", "O", "4"]
+    assert cpu.get_immediate_winning_position(sequence) == "4"
