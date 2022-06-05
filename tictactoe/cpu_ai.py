@@ -17,7 +17,7 @@ class CpuAI:
         choice = np.random.choice(positions_list, 1)
         return choice
 
-    def find_sure_win_position(self, board: Board) -> List[str]:
+    def find_sure_win_positions(self, board: Board, marker: str) -> List[str]:
         """
         Go through lines, columns and diags,
         Find all immediate winning positions and returns them in a list
@@ -33,18 +33,19 @@ class CpuAI:
 
         for seq in sequences_to_check:
             # Make sure that the output is not empty before append
-            if win_pos := self.get_immediate_winning_position(seq):
+            if win_pos := self.identify_win_position_in_sequence(seq, marker):
                 winning_positions.append(win_pos)
 
         return winning_positions
 
-    def get_immediate_winning_position(self, sequence: list) -> str:
+    def identify_win_position_in_sequence(self, sequence: list, marker: str) -> str:
         """
         Returns string of winning position if immediate win possible
-        else returns an empty strin
-        g"""
+        else returns an empty string
+        """
         # Remove current player markers
-        if "X" in sequence:
+        other_marker = "X" if marker == "O" else "O"
+        if other_marker in sequence:
             return ""
-        unoccupied_positions = set(sequence).difference("O")
+        unoccupied_positions = set(sequence).difference(marker)
         return list(unoccupied_positions)[0] if len(unoccupied_positions) == 1 else ""
