@@ -5,17 +5,18 @@ from itertools import chain
 
 
 class CpuAI:
-    pass
+    def __init__(self, difficulty="medium"):
+        self.difficulty = difficulty
 
     def get_list_of_valid_positions(self, board: Board) -> List[str]:
         current_board = board.board
         x_coordo, y_coordo = np.where((current_board != "X") & (current_board != "O"))
         return [current_board[x, y] for x, y in zip(x_coordo, y_coordo)]
 
-    def pick_valid_position(self, board: Board) -> List[str]:
+    def pick_valid_position(self, board: Board) -> str:
         positions_list = self.get_list_of_valid_positions(board)
         choice = np.random.choice(positions_list, 1)
-        return choice
+        return choice[0]
 
     def find_sure_win_positions(self, board: Board, marker: str) -> List[str]:
         """

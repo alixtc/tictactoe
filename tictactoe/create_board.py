@@ -18,6 +18,12 @@ class Board:
         x, y = np.where(self.board == str(position))
         self.board[x, y] = marker
 
+    def has_empty_positions(self):
+        empty_positions = [
+            item for item in self.board.flatten() if item not in ["X", "O"]
+        ]
+        return True if len(empty_positions) > 0 else False
+
     def __str__(self) -> str:
         spacer = "\n" + 9 * "-" + "\n"
         board_string = spacer.join(

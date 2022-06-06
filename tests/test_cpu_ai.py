@@ -22,6 +22,7 @@ def test_cpu_pick_valid_position():
 
     move = cpu.pick_valid_position(board)
     assert move in cpu.get_list_of_valid_positions(board)
+    assert isinstance(move, str)
 
 
 def test_cpu_find_sure_win_positions():
@@ -68,7 +69,7 @@ def test_identify_win_position_in_sequence_has_win_position():
     assert cpu.identify_win_position_in_sequence(sequence, "O") == "4"
 
 
-def test_identify_win_position_in_sequence_has_win_position():
+def test_identify_win_position_in_sequence_has_win_position_with_another_marker():
     cpu = CpuAI()
     sequence = ["X", "X", "4"]
     assert cpu.identify_win_position_in_sequence(sequence, "X") == "4"

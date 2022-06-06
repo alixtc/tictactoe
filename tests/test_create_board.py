@@ -50,3 +50,19 @@ def test_print_board(board):
     assert "\n" in board_string
     assert " | " in board_string
     assert "-" in board_string
+
+
+def test_check_if_board_has_empty_positions():
+    board = Board()
+    board.board = np.array(
+        [["X", "2", "3"], ["4", "5", "6"], ["7", "8", "O"]], dtype=str
+    )
+    assert board.has_empty_positions() == True
+
+
+def test_check_if_board_has_no_empty_positions():
+    board = Board()
+    board.board = np.array(
+        [["X", "O", "X"], ["O", "X", "O"], ["O", "X", "O"]], dtype=str
+    )
+    assert board.has_empty_positions() == False
