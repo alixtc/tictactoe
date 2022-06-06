@@ -1,4 +1,5 @@
 import numpy as np
+from typing import List
 
 
 class PositionError(Exception):
@@ -8,6 +9,13 @@ class PositionError(Exception):
 class Board:
     def __init__(self) -> None:
         self.board = np.array(range(1, 10), dtype=str).reshape(3, 3)
+
+    def get_list_of_valid_positions(
+        self,
+    ) -> List[str]:
+        """Returns a list with string positions as displayed on the grid"""
+        x_coordo, y_coordo = np.where((self.board != "X") & (self.board != "O"))
+        return [self.board[x, y] for x, y in zip(x_coordo, y_coordo)]
 
     def select_position_on_board(self, marker, position: int) -> None:
         if not isinstance(position, int):

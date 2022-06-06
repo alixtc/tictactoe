@@ -17,6 +17,16 @@ def test_add_marker_on_board():
     assert board.board[2, 2] == "O"
 
 
+def test_cpu_gets_all_valid_positions():
+    board = Board()
+    board.board = np.array(
+        [["X", "2", "X"], ["4", "O", "6"], ["7", "O", "9"]], dtype=str
+    )
+
+    moves = board.get_list_of_valid_positions()
+    assert moves == ["2", "4", "6", "7", "9"]
+
+
 @pytest.fixture
 def board():
     board = Board()
