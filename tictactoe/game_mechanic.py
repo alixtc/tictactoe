@@ -24,7 +24,7 @@ class CreateGame:
                 return
 
         # Attempts to prevent easy opponent win on next turn
-        if self.cpu.difficulty > 2:
+        if self.cpu.difficulty > 1:
             defeat_positions = self.cpu.find_sure_win_positions(self.board, "X")
             if defeat_positions:
                 self.board.select_position_on_board("O", int(defeat_positions[0]))
@@ -36,7 +36,7 @@ class CreateGame:
     def make_turn(self) -> str:
         print(str(self.board))
 
-        pos = input("Please select your move:\n")
+        pos = self.get_valid_user_input()
         self.board.select_position_on_board("X", int(pos))
         if EvaluateVictory(self.board, "X").evaluate_game():
             return "Player 1 has won the game"
@@ -50,6 +50,14 @@ class CreateGame:
             return "It's a draw !"
 
         return ""
+
+    def get_valid_user_input(self):
+        allowed_positions = self.board.get_list_of_valid_positions()
+
+        pos = input("Please select your move:\n")
+        while pos not in allowed_positions:
+            pos = input(f"Please select your move in {allowed_positions}:\n")
+        return pos
 
     def play(self) -> bool:
         game_result = ""
