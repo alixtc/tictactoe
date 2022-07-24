@@ -4,10 +4,10 @@ from tictactoe.game_rules import EvaluateVictory
 
 
 class CreateGame:
-    def __init__(self, difficulty: str = "Medium") -> None:
+    def __init__(self, difficulty: Difficulty = Difficulty["Medium"]) -> None:
         self.result = ""
         self.board = Board()
-        self.cpu = CpuAI(Difficulty[difficulty])
+        self.cpu = CpuAI(difficulty)
 
 
 

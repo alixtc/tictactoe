@@ -1,9 +1,11 @@
 from tictactoe.game_mechanic import CreateGame
 
 class TicTacToe:
-    def __init__(self) -> None:
+    def __init__(self,
+                 game: CreateGame = CreateGame) -> None:
         self.player_input = ''
-        self.game = CreateGame()
+        self.difficulty = ''
+        self.game = game()
 
     def continue_game(self):
         while self.player_input == '':
