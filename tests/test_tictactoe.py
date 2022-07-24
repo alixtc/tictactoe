@@ -1,3 +1,4 @@
+from tictactoe.cpu_ai import Difficulty
 from tictactoe.create_board import Board
 from tictactoe.game_mechanic import CreateGame
 from tictactoe.tictactoe import TicTacToe
@@ -14,7 +15,7 @@ def test_tictactoe_exits_when_player_enters_q():
         return "q"
 
     ttt.input = mock_input
-    party = party.continue_game()
+    party = party.start_game(MockCreateGame)
 
     assert party == None
 
@@ -28,31 +29,25 @@ def test_tictactoe_aks_again_when_player_input_not_valid():
         return answers.__next__()
 
     ttt.input = mock_input
-    party = party.continue_game()
+    party = party.start_game(MockCreateGame)
 
     assert party == None
 
 
 def test_TTT_creates_a_new_game_when_asked_to_continue():
     party = TicTacToe()
-    party.game.board = []
 
     answers = iter(["c", "q"])
     def mock_input(messages: str):
         return answers.__next__()
     ttt.input = mock_input
 
-    # Simulate ask to continue
-    ttt.CreateGame = MockCreateGame
-    party.continue_game()
-
-    # Restore initial state after mocking
-    ttt.CreateGame = CreateGame
+    party.start_game(MockCreateGame)
 
     assert not hasattr(party.game, 'board')
 
 
 
-def test_TTC_creates_a_new_game():
+def test_TTC_has_a_difficulty_setting():
     party = TicTacToe()
-    assert isinstance(party.game, CreateGame)
+    assert isinstance(party.difficulty, Difficulty)

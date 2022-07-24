@@ -1,13 +1,20 @@
 from tictactoe.game_mechanic import CreateGame
+from tictactoe.cpu_ai import Difficulty
 
 class TicTacToe:
-    def __init__(self,
-                 game: CreateGame = CreateGame) -> None:
-        self.player_input = ''
-        self.difficulty = ''
-        self.game = game()
+    def __init__(
+        self,
+        difficulty: Difficulty = Difficulty['Medium'],
+    ) -> None:
 
-    def continue_game(self):
+        self.player_input = ''
+        self.difficulty = difficulty
+
+
+    def start_game(self,
+                   game: CreateGame = CreateGame
+                   ):
+        self.game = game().play()
         while self.player_input == '':
 
             while self.player_input not in ['c', 'q']:
@@ -18,14 +25,9 @@ class TicTacToe:
 
             if self.player_input == 'c':
                 self.player_input = ''
-                self.game = CreateGame().play()
+                self.game = game().play()
 
 
-# create game
-# plays
-# game ends
-# ask to continue
-# Exit or recreate a new game
 
 if __name__ == '__main__':
-    game = TicTacToe().continue_game()
+    game = TicTacToe().start_game()
