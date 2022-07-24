@@ -119,3 +119,9 @@ def test_make_turn_wait_for_valid_position_input_from_player():
     assert game.board.board[0, 1] == "X"
     assert game.board.board[1, 1] == "O"
     assert game.board.board[1, 0] == "X"
+
+
+def test_play_can_be_interrupted_using_game_result():
+    game = CreateGame()
+    game.result = 'Stop'
+    assert game.play() == False

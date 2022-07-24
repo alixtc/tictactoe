@@ -2,10 +2,17 @@ from tictactoe.create_board import Board
 from typing import List
 import numpy as np
 from itertools import chain
+from enum import Enum
+
+
+class Difficulty(Enum):
+    Easy = 1
+    Medium = 2
+    Hard = 3
 
 
 class CpuAI:
-    def __init__(self, difficulty="medium"):
+    def __init__(self, difficulty: Difficulty = Difficulty.Medium):
         self.difficulty = difficulty
 
     def pick_valid_position(self, board: Board) -> str:

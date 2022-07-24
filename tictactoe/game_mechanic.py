@@ -1,30 +1,26 @@
 from tictactoe.create_board import Board
-from tictactoe.cpu_ai import CpuAI
+from tictactoe.cpu_ai import CpuAI, Difficulty
 from tictactoe.game_rules import EvaluateVictory
-from enum import Enum
-
-
-class Difficulty(Enum):
-    Easy = 1
-    Medium = 2
-    Hard = 3
 
 
 class CreateGame:
-    def __init__(self, difficulty="Medium") -> None:
+    def __init__(self, difficulty: str = "Medium") -> None:
+        self.result = ""
         self.board = Board()
-        self.cpu = CpuAI(Difficulty[difficulty].value)
+        self.cpu = CpuAI(Difficulty[difficulty])
+
+
 
     def make_cpu_play(self) -> None:
         # if difficulty medium or above, plays immediate win positions
-        if self.cpu.difficulty > 1:
+        if self.cpu.difficulty.value > 1:
             win_positions = self.cpu.find_sure_win_positions(self.board, "O")
             if win_positions:
                 self.board.select_position_on_board("O", int(win_positions[0]))
                 return
 
         # Attempts to prevent easy opponent win on next turn
-        if self.cpu.difficulty > 1:
+        if self.cpu.difficulty.value > 1:
             defeat_positions = self.cpu.find_sure_win_positions(self.board, "X")
             if defeat_positions:
                 self.board.select_position_on_board("O", int(defeat_positions[0]))
@@ -60,12 +56,12 @@ class CreateGame:
         return pos
 
     def play(self) -> bool:
-        game_result = ""
-        while len(game_result) == 0:
-            game_result = self.make_turn()
+        print(self.result)
+        while len(self.result) == 0:
+            self.result = self.make_turn()
 
         print(str(self.board))
-        print(game_result)
+        print(self.result)
         return False
 
 
