@@ -16,16 +16,25 @@ class TicTacToe:
         while self.player_input == "":
 
             while self.player_input not in ["c", "q"]:
-                self.player_input = input(
-                    """
-                Would you like to play an other game ?
-                Press "c" to continue, press "q" to exit the game.
-                """
-                )
+                self.player_input = self.get_player_input()
 
-            if self.player_input == "c":
-                self.player_input = ""
-                self.game = game.play()
+            if self.player_input == "q":
+                return
+
+            self.player_input = ""
+            self.game = game.play()
+
+    def get_player_input(self) -> str:
+        return input(
+            """
+            Would you like to play an other game ?
+            Press "c" to continue, press "q" to exit the game.
+            """
+        )
+
+def  set_difficulty(level='') -> Difficulty:
+
+        return Difficulty[level]
 
 
 if __name__ == "__main__":
