@@ -1,5 +1,6 @@
 from tictactoe.cpu_ai import Difficulty
 from tictactoe.tictactoe import TicTacToe, set_difficulty
+from tictactoe.game_mechanic import CreateGame
 from unittest import mock
 
 def mock_play():
