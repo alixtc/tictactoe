@@ -10,7 +10,9 @@ Press "d" to change the difficulty"
 
 CHOOSE_DIFFICULTY_MESSAGE = """
 Please type desired difficulty level among:
-Easy, Medium, Hard.
+1 - Easy,
+2 - Medium,
+3 - Hard.
 """
 
 class TicTacToe:
@@ -44,9 +46,23 @@ class TicTacToe:
 
 def  set_difficulty() -> Difficulty:
         level  = ''
-        while level not in Difficulty.__members__:
-            level = input(CHOOSE_DIFFICULTY_MESSAGE)
-        return Difficulty[level]
+        while not level:
+            user_input = input(CHOOSE_DIFFICULTY_MESSAGE)
+
+            # Set difficulty with full Enum name
+            try:
+                level = Difficulty[user_input]
+            except KeyError:
+                pass
+
+            # Set difficulty with Enum number
+            try:
+               user_input = int(user_input)
+               level = Difficulty(user_input)
+            except ValueError:
+                pass
+
+        return level
 
 
 if __name__ == "__main__":
