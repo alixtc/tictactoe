@@ -1,12 +1,9 @@
-import builtins
-from unittest.mock import MagicMock, patch
 
-from pytest import MonkeyPatch
+from unittest.mock import MagicMock, patch
 
 from tictactoe.cpu_ai import Difficulty
 from tictactoe.game_mechanic import CreateGame
 from tictactoe.tictactoe import TicTacToe
-
 
 def mock_play():
     pass
@@ -51,7 +48,7 @@ def test_TTC_has_a_difficulty_setting():
 
 
 
-@patch("tictactoe.tictactoe.Difficulty.set_difficulty", return_value=Difficulty.Hard)
+@patch("tictactoe.cpu_ai.Difficulty.set_difficulty", return_value=Difficulty.Hard)
 @patch("tictactoe.game_mechanic.CreateGame.play", side_effect=mock_play)
 @patch("tictactoe.tictactoe.input", side_effect=["d", "q"])
 def test_TTT_can_change_difficulty_after_game(

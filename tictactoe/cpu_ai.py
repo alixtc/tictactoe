@@ -1,9 +1,12 @@
-from tictactoe.create_board import Board
-from typing import List
-import numpy as np
-from itertools import chain
-from enum import Enum
+from __future__ import annotations
 
+from enum import Enum
+from itertools import chain
+from typing import List
+
+import numpy as np
+
+from tictactoe.create_board import Board
 
 CHOOSE_DIFFICULTY_MESSAGE = """
 Please type desired difficulty level among:
@@ -18,7 +21,7 @@ class Difficulty(Enum):
     Hard = 3
 
     @classmethod
-    def set_difficulty(cls):
+    def set_difficulty(cls) -> Difficulty:
         level = None
         while level is None:
             user_input = input(CHOOSE_DIFFICULTY_MESSAGE)
