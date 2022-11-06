@@ -1,5 +1,6 @@
 from tictactoe.game_mechanic import CreateGame
 from tictactoe.cpu_ai import Difficulty
+from typing import Type
 
 CONTINUE_MESSAGE = """
 Would you like to play an other game ?
@@ -18,7 +19,7 @@ class TicTacToe:
         self.player_input = ""
         self.difficulty = difficulty
 
-    def start_game(self, game_class = CreateGame) -> None:
+    def start_game(self, game_class: Type[CreateGame]=CreateGame) -> None:
         self.game = game_class(self.difficulty).play()
         while self.player_input == "":
 
@@ -28,17 +29,14 @@ class TicTacToe:
             if self.player_input == "q":
                 return
 
-            if self.player_input == 'd':
+            if self.player_input == "d":
                 self.difficulty = Difficulty.set_difficulty()
-
 
             self.player_input = ""
             self.game = game_class(self.difficulty).play()
 
     def get_player_input(self) -> str:
         return input(CONTINUE_MESSAGE)
-
-
 
 
 if __name__ == "__main__":

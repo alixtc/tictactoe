@@ -123,5 +123,5 @@ def test_make_turn_wait_for_valid_position_input_from_player():
 
 def test_play_can_be_interrupted_using_game_result():
     game = CreateGame()
-    game.result = 'Stop'
+    game.result = "Stop"
     assert game.play() == False

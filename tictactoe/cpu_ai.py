@@ -15,6 +15,7 @@ Please type desired difficulty level among:
 3 - Hard.
 """
 
+
 class Difficulty(Enum):
     Easy = 1
     Medium = 2
@@ -22,6 +23,7 @@ class Difficulty(Enum):
 
     @classmethod
     def set_difficulty(cls) -> Difficulty:
+        """Loops continuously for user input until valid difficulty is selected"""
         level = None
         while level is None:
             user_input = input(CHOOSE_DIFFICULTY_MESSAGE)
@@ -34,11 +36,12 @@ class Difficulty(Enum):
 
             # Set difficulty with Enum number
             try:
-               level = cls(int(user_input))
+                level = cls(int(user_input))
             except ValueError:
                 pass
 
         return level
+
 
 class CpuAI:
     def __init__(self, difficulty: Difficulty = Difficulty.Medium):

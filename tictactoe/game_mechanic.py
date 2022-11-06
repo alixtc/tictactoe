@@ -9,8 +9,6 @@ class CreateGame:
         self.board = Board()
         self.cpu = CpuAI(difficulty)
 
-
-
     def make_cpu_play(self) -> None:
         # if difficulty medium or above, plays immediate win positions
         if self.cpu.difficulty.value > 1:

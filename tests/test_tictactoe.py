@@ -1,9 +1,9 @@
-
 from unittest.mock import MagicMock, patch
 
 from tictactoe.cpu_ai import Difficulty
 from tictactoe.game_mechanic import CreateGame
 from tictactoe.tictactoe import TicTacToe
+
 
 def mock_play():
     pass
@@ -45,7 +45,6 @@ def test_TTT_creates_a_new_game_when_asked_to_continue(mock_input, mock_play):
 def test_TTC_has_a_difficulty_setting():
     party = TicTacToe()
     assert isinstance(party.difficulty, Difficulty)
-
 
 
 @patch("tictactoe.cpu_ai.Difficulty.set_difficulty", return_value=Difficulty.Hard)
