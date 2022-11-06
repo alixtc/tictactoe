@@ -5,7 +5,7 @@ from pytest import MonkeyPatch
 
 from tictactoe.cpu_ai import Difficulty
 from tictactoe.game_mechanic import CreateGame
-from tictactoe.tictactoe import TicTacToe, set_difficulty
+from tictactoe.tictactoe import TicTacToe
 
 
 def mock_play():
@@ -50,32 +50,8 @@ def test_TTC_has_a_difficulty_setting():
     assert isinstance(party.difficulty, Difficulty)
 
 
-@patch("tictactoe.tictactoe.input", side_effect=["Easy", "Hard"])
-def test_set_difficulty_return_appropriate_difficulty(mock_input):
-    difficulty = set_difficulty()
-    assert difficulty == Difficulty.Easy
-    difficulty = set_difficulty()
-    assert difficulty == Difficulty.Hard
 
-@patch("tictactoe.tictactoe.input", side_effect=[1, 133, 3])
-def test_set_difficulty_return_difficulty_with_numbers(mock_input: MagicMock):
-    difficulty = set_difficulty()
-    assert difficulty == Difficulty.Easy
-    difficulty = set_difficulty()
-    assert difficulty == Difficulty.Hard
-
-    assert mock_input.call_count == 3
-
-
-# @patch('tictactoe.tictactoe.input', side_effect= ["Eays", 'Mediume', "Hard"])
-def test_set_difficulty_loops_until_appropriate_input(monkeypatch: MonkeyPatch):
-    ANSWERS = iter(["Eays", "Mediume", "Hard"])
-    monkeypatch.setattr(builtins, "input", value=lambda _: next(ANSWERS))
-    difficulty = set_difficulty()
-    assert difficulty == Difficulty.Hard
-
-
-@patch("tictactoe.tictactoe.set_difficulty", return_value=Difficulty.Hard)
+@patch("tictactoe.tictactoe.Difficulty.set_difficulty", return_value=Difficulty.Hard)
 @patch("tictactoe.game_mechanic.CreateGame.play", side_effect=mock_play)
 @patch("tictactoe.tictactoe.input", side_effect=["d", "q"])
 def test_TTT_can_change_difficulty_after_game(

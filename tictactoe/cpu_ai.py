@@ -5,11 +5,37 @@ from itertools import chain
 from enum import Enum
 
 
+CHOOSE_DIFFICULTY_MESSAGE = """
+Please type desired difficulty level among:
+1 - Easy,
+2 - Medium,
+3 - Hard.
+"""
+
 class Difficulty(Enum):
     Easy = 1
     Medium = 2
     Hard = 3
 
+    @classmethod
+    def set_difficulty(cls):
+        level = None
+        while level is None:
+            user_input = input(CHOOSE_DIFFICULTY_MESSAGE)
+
+            # Set difficulty with full Enum name
+            try:
+                level = cls[user_input]
+            except KeyError:
+                pass
+
+            # Set difficulty with Enum number
+            try:
+               level = cls(int(user_input))
+            except ValueError:
+                pass
+
+        return level
 
 class CpuAI:
     def __init__(self, difficulty: Difficulty = Difficulty.Medium):

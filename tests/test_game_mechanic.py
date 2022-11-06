@@ -1,8 +1,8 @@
 from tictactoe.game_mechanic import CreateGame
-from tictactoe.create_board import Board, PositionError
-from tictactoe.cpu_ai import CpuAI
+from tictactoe.create_board import Board
+from tictactoe.cpu_ai import CpuAI, Difficulty
 import tictactoe.game_mechanic as gm
-from unittest import mock
+
 import numpy as np
 
 
@@ -22,8 +22,8 @@ def test_make_cpu_play():
     assert len(final_position) == len(original_positions) - 1
 
 
-def test_make_cpu_play_prevents_easy_win_if_difficulty_atleast_medium():
-    game = CreateGame()
+def test_make_cpu_play_prevents_easy_win_if_difficulty_equals_hard():
+    game = CreateGame(Difficulty.Hard)
     game.board.board = np.array(
         [["1", "X", "X"], ["4", "O", "6"], ["O", "8", "9"]], dtype=str
     )

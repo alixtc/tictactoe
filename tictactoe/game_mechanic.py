@@ -20,7 +20,7 @@ class CreateGame:
                 return
 
         # Attempts to prevent easy opponent win on next turn
-        if self.cpu.difficulty.value > 1:
+        if self.cpu.difficulty.value > 2:
             defeat_positions = self.cpu.find_sure_win_positions(self.board, "X")
             if defeat_positions:
                 self.board.select_position_on_board("O", int(defeat_positions[0]))
