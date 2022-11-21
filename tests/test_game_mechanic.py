@@ -1,9 +1,11 @@
-from tictactoe.game_mechanic import CreateGame
-from tictactoe.create_board import Board
-from tictactoe.cpu_ai import CpuAI, Difficulty
-import tictactoe.game_mechanic as gm
+from unittest.mock import MagicMock, patch
 
 import numpy as np
+
+import tictactoe.game_mechanic as gm
+from tictactoe.cpu_ai import CpuAI, Difficulty
+from tictactoe.create_board import Board
+from tictactoe.game_mechanic import CreateGame
 
 
 def test_create_game_generate_a_board_and_cpu():
@@ -65,8 +67,8 @@ def test_make_turn_has_user_win_the_game():
 
     gm.input = mock_input
 
-    final_turn = game.make_turn()
-    assert final_turn == "Player 1 has won the game"
+    turn_message = game.make_turn()
+    assert "player" in turn_message
 
 
 def test_make_turn_has_no_winner():
@@ -79,7 +81,7 @@ def test_make_turn_has_no_winner():
         return "8"
 
     gm.input = mock_input
-    assert game.make_turn() == "It's a draw !"
+    assert "draw" in game.make_turn()
 
 
 def test_play_has_cpu_win_the_game():
@@ -121,7 +123,39 @@ def test_make_turn_wait_for_valid_position_input_from_player():
     assert game.board.board[1, 0] == "X"
 
 
-def test_play_can_be_interrupted_using_game_result():
+def test_CreateGame_has_score_board_attribute():
     game = CreateGame()
-    game.result = "Stop"
-    assert game.play() == False
+    assert hasattr(game, "score_board")
+
+
+@patch.object(CreateGame, "make_turn", side_effect=["draw", "player", "cpu"])
+def test_score_board_adds_one_to_counter_when_player_wins(mock_turn: MagicMock):
+    game = CreateGame()
+
+    game.play()
+    assert game.score_board["draw"] == 1
+    assert mock_turn.call_count == 1
+
+
+@patch.object(
+    CreateGame,
+    "make_turn",
+    side_effect=["draw", "draw", "player", "player", "cpu", "cpu", "player"],
+)
+def test_score_board_adds_multiple_consecutive_wins(mock_turn: MagicMock):
+    game = CreateGame()
+    for _ in range(7):
+        game.play()
+
+    assert game.score_board["draw"] == 2
+    assert game.score_board["player"] == 3
+    assert game.score_board["cpu"] == 2
+    assert mock_turn.call_count == 7
+
+
+def test_print_score_board_has_3_components():
+    game = CreateGame()
+    score = game.print_score_board()
+    assert "draw".upper() in score
+    assert "cpu".upper() in score
+    assert "player".upper() in score

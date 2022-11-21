@@ -1,13 +1,17 @@
-from tictactoe.create_board import Board
 from tictactoe.cpu_ai import CpuAI, Difficulty
+from tictactoe.create_board import Board
 from tictactoe.game_rules import EvaluateVictory
 
 
 class CreateGame:
     def __init__(self, difficulty: Difficulty = Difficulty["Medium"]) -> None:
-        self.result = ""
         self.board = Board()
         self.cpu = CpuAI(difficulty)
+        self.score_board = dict(
+            player=0,
+            cpu=0,
+            draw=0,
+        )
 
     def make_cpu_play(self) -> None:
         # if difficulty medium or above, plays immediate win positions
@@ -28,20 +32,28 @@ class CreateGame:
         self.board.select_position_on_board("O", int(choosed_position))
 
     def make_turn(self) -> str:
+        """
+        Ask for valid user input and check for victory,
+        then does the same for CPU
+
+        ---
+        Returns a string indicating the player that won the round, or if it's a
+        draw, returns an empty string if no one won this turn.
+        """
         print(str(self.board))
 
         pos = self.get_valid_user_input()
         self.board.select_position_on_board("X", int(pos))
         if EvaluateVictory(self.board, "X").evaluate_game():
-            return "Player 1 has won the game"
+            return "player"
         if not self.board.has_empty_positions():
-            return "It's a draw !"
+            return "draw"
 
         self.make_cpu_play()
         if EvaluateVictory(self.board, "O").evaluate_game():
-            return "CPU has won the game"
+            return "cpu"
         if not self.board.has_empty_positions():
-            return "It's a draw !"
+            return "draw"
 
         return ""
 
@@ -54,13 +66,20 @@ class CreateGame:
         return pos
 
     def play(self) -> bool:
-        print(self.result)
-        while len(self.result) == 0:
-            self.result = self.make_turn()
+        game_result = ""
+        while len(game_result) == 0:
+            game_result = self.make_turn()
+
+        self.score_board[game_result] += 1
 
         print(str(self.board))
-        print(self.result)
+        print(game_result)
         return False
+
+    def print_score_board(self) -> str:
+        """Display scores in formatted string"""
+        score_list = [f"{k.upper()}: {v}" for k, v in self.score_board.items()]
+        return " | | ".join(score_list)
 
 
 if __name__ == "__main__":
